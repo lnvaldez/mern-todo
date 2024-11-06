@@ -21,3 +21,14 @@ const insert = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// Set task as completed
+const complete = async (req, res) => {
+  const _id = req.params._id;
+  try {
+    await Task.updateOne({ _id }, { done: true });
+    res.status(200).json({ message: "Task completed" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
