@@ -32,3 +32,14 @@ const complete = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+// Delete task (hard-delete)
+const remove = async (req, res) => {
+  const _id = req.params._id;
+  try {
+    await Task.deleteOne(_id);
+    res.status(200).json({ message: "Task removed" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
