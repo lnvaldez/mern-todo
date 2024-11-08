@@ -16,3 +16,5 @@ router.post("/add", insert);
 router.patch("/complete/:id", complete);
 
 router.delete("/remove/:id", remove);
+
+module.exports = router;
