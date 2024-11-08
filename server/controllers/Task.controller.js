@@ -15,7 +15,7 @@ const find = async (req, res) => {
 const insert = async (req, res) => {
   const title = req.body;
   try {
-    await Task.insert(title);
+    await Task.create(title);
     res.status(200).json({ message: "Task created" });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -24,7 +24,7 @@ const insert = async (req, res) => {
 
 // Set task as completed
 const complete = async (req, res) => {
-  const _id = req.params._id;
+  const id = req.params.id;
   try {
     await Task.updateOne({ _id }, { done: true });
     res.status(200).json({ message: "Task completed" });
