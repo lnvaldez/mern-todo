@@ -26,7 +26,7 @@ const insert = async (req, res) => {
 const complete = async (req, res) => {
   const id = req.params.id;
   try {
-    await Task.updateOne({ _id }, { done: true });
+    await Task.updateOne({ id }, { done: true });
     res.status(200).json({ message: "Task completed" });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -35,7 +35,7 @@ const complete = async (req, res) => {
 
 // Delete task (hard-delete)
 const remove = async (req, res) => {
-  const _id = req.params._id;
+  const id = req.params.id;
   try {
     await Task.deleteOne(_id);
     res.status(200).json({ message: "Task removed" });
