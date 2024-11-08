@@ -26,7 +26,7 @@ const insert = async (req, res) => {
 const complete = async (req, res) => {
   const id = req.params.id;
   try {
-    await Task.updateOne({ id }, { done: true });
+    await Task.updateOne({ _id: id }, { $set: { done: true } });
     res.status(200).json({ message: "Task completed" });
   } catch (error) {
     res.status(500).json({ error: error.message });
