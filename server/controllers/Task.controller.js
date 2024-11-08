@@ -37,7 +37,7 @@ const complete = async (req, res) => {
 const remove = async (req, res) => {
   const id = req.params.id;
   try {
-    await Task.deleteOne(_id);
+    await Task.deleteOne({ _id: id });
     res.status(200).json({ message: "Task removed" });
   } catch (error) {
     res.status(500).json({ error: error.message });
