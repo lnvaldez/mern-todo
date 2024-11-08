@@ -9,10 +9,10 @@ const {
 
 const router = express.Router();
 
-router.get("/", find);
+router.get("/all", find);
 
-router.post("/", insert);
+router.post("/add", insert);
 
-router.patch("/:id", complete);
+router.patch("/complete/:id", complete);
 
-router.delete("/:id", remove);
+router.delete("/remove/:id", remove);
