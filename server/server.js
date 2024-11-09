@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 // Routes
 const taskRoutes = require("./routes/Task.routes");
+const userRoutes = require("./routes/User.routes");
 
 const PORT = process.env.PORT;
 
@@ -13,6 +14,7 @@ const app = express();
 app.use(express.json());
 
 app.use("/tasks", taskRoutes);
+app.use("/user", userRoutes);
 
 mongoose
   .connect(process.env.MONGO_URL)
