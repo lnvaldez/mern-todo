@@ -14,12 +14,12 @@ const router = express.Router();
 
 router.use(requireAuth);
 
-router.get("/all", getAllTasks);
+router.get("/", getAllTasks);
 
-router.post("/add", addTask);
+router.post("/", addTask);
 
-router.patch("/complete/:id", toggleTaskComplete);
+router.patch("/:id", toggleTaskComplete);
 
-router.delete("/remove/:id", removeTask);
+router.delete("/:id", removeTask);
 
 module.exports = router;

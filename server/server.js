@@ -13,8 +13,8 @@ const app = express();
 
 app.use(express.json());
 
-app.use("/tasks", taskRoutes);
-app.use("/user", userRoutes);
+app.use("/api/tasks", taskRoutes);
+app.use("/api/users", userRoutes);
 
 mongoose
   .connect(process.env.MONGO_URL)
