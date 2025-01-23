@@ -36,7 +36,8 @@ const addTask = async (req, res) => {
 const toggleTaskComplete = async (req, res) => {
   const id = req.params.id;
   try {
-    await Task.updateOne({ _id: id }, { $set: { done: true } });
+    const task = await Task.findById(id);
+    await Task.updateOne({ _id: id }, { $set: { done: !task.done } });
     res.status(200).json({ message: "Task completed" });
   } catch (error) {
     res.status(500).json({ error: error.message });
