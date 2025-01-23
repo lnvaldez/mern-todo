@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 // Components
 import TaskDetail from "../components/TaskDetail";
+import TaskInput from "../components/TaskInput";
 
 const Home = () => {
   const [tasks, setTasks] = useState(null);
@@ -21,6 +22,7 @@ const Home = () => {
 
   return (
     <div className="home">
+      <TaskInput onUpdate={fetchTasks} />
       <div className="tasks">
         {tasks &&
           tasks.map((task) => (
