@@ -1,8 +1,7 @@
 const Task = require("../models/Task.model");
-const mongoose = require("mongoose");
 
 // Get all tasks
-const find = async (req, res) => {
+const getAllTasks = async (req, res) => {
   try {
     const tasks = await Task.find();
     res.status(200).json(tasks);
@@ -11,8 +10,19 @@ const find = async (req, res) => {
   }
 };
 
+// Get task by id
+const getTaskById = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const task = await Task.findById(id);
+    res.status(200).json(task);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 // Create new task
-const insert = async (req, res) => {
+const addTask = async (req, res) => {
   const title = req.body;
   try {
     await Task.create(title);
@@ -23,7 +33,7 @@ const insert = async (req, res) => {
 };
 
 // Set task as completed
-const complete = async (req, res) => {
+const toggleTaskComplete = async (req, res) => {
   const id = req.params.id;
   try {
     await Task.updateOne({ _id: id }, { $set: { done: true } });
@@ -34,7 +44,7 @@ const complete = async (req, res) => {
 };
 
 // Delete task (hard-delete)
-const remove = async (req, res) => {
+const removeTask = async (req, res) => {
   const id = req.params.id;
   try {
     await Task.deleteOne({ _id: id });
@@ -45,8 +55,9 @@ const remove = async (req, res) => {
 };
 
 module.exports = {
-  find,
-  insert,
-  complete,
-  remove,
+  getAllTasks,
+  getTaskById,
+  addTask,
+  toggleTaskComplete,
+  removeTask,
 };
