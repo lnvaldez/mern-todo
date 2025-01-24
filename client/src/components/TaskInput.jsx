@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const TaskInput = () => {
+const TaskInput = ({ onUpdate }) => {
   const [title, setTitle] = useState("");
   const [error, setError] = useState(null);
 
@@ -9,34 +9,43 @@ const TaskInput = () => {
 
     const title = e.target.title.value;
 
-    const response = await fetch("/api/tasks", {
-      method: "POST",
-      body: JSON.stringify(title),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    try {
+      const response = await fetch("/api/tasks", {
+        method: "POST",
+        body: JSON.stringify({ title }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    const json = await response.json();
+      const json = await response.json();
 
-    if (!response.ok) {
-      setError(json.error);
-    } else {
-      setTitle("");
-      setError(null);
-      console.log("Task added");
+      if (!response.ok) {
+        setError(json.error);
+      } else {
+        setTitle("");
+        setError(null);
+        console.log("Task added");
+        props.onUpdate();
+      }
+    } catch (error) {
+      setError("Failed to add task");
     }
   };
 
   return (
     <div>
       <h1>Add Todo</h1>
-      <input
-        type="text"
-        onChange={(e) => setTitle(e.target.value)}
-        value={title}
-      ></input>
-      <button onClick={handleSubmit}>Add</button>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="title"
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+        ></input>
+        <button type="submit">Add</button>
+      </form>
+      {error && <div>{error}</div>}
     </div>
   );
 };
