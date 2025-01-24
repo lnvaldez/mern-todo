@@ -22,14 +22,17 @@ const TaskInput = ({ onUpdate }) => {
 
       if (!response.ok) {
         setError(json.error);
-      } else {
+      }
+
+      if (response.ok) {
         setTitle("");
         setError(null);
         console.log("Task added");
-        props.onUpdate();
+        onUpdate();
       }
     } catch (error) {
       setError("Failed to add task");
+      console.error(error);
     }
   };
 
