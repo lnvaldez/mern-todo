@@ -4,6 +4,7 @@ const express = require("express");
 const {
   getAllTasks,
   addTask,
+  updateTask,
   toggleTaskComplete,
   removeTask,
 } = require("../controllers/Task.controller");
@@ -19,6 +20,8 @@ router.get("/", getAllTasks);
 router.post("/", addTask);
 
 router.patch("/:id", toggleTaskComplete);
+
+router.put("/:id", updateTask);
 
 router.delete("/:id", removeTask);
 
