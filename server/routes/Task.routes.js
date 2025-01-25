@@ -2,24 +2,27 @@ const express = require("express");
 
 // Imported functions from task controller
 const {
-  find,
-  insert,
-  complete,
-  remove,
+  getAllTasks,
+  addTask,
+  updateTask,
+  toggleTaskComplete,
+  removeTask,
 } = require("../controllers/Task.controller");
 
-const requireAuth = require("../middleware/requireAuth");
+// const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
 
-router.use(requireAuth);
+// router.use(requireAuth);
 
-router.get("/all", find);
+router.get("/", getAllTasks);
 
-router.post("/add", insert);
+router.post("/", addTask);
 
-router.patch("/complete/:id", complete);
+router.patch("/:id", toggleTaskComplete);
 
-router.delete("/remove/:id", remove);
+router.put("/:id", updateTask);
+
+router.delete("/:id", removeTask);
 
 module.exports = router;
