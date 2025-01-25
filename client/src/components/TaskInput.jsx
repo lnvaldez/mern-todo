@@ -5,6 +5,7 @@ const TaskInput = ({ onUpdate }) => {
   const { dispatch } = useTasksContext();
   const [title, setTitle] = useState("");
   const [error, setError] = useState(null);
+  const [emptyFields, setEmptyFields] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,11 +25,13 @@ const TaskInput = ({ onUpdate }) => {
 
       if (!response.ok) {
         setError(json.error);
+        setEmptyFields(json.emptyFields);
       }
 
       if (response.ok) {
         setTitle("");
         setError(null);
+        setEmptyFields([]);
         console.log("Task added");
         dispatch({ type: "CREATE_TASK", payload: json.task });
       }
@@ -47,6 +50,7 @@ const TaskInput = ({ onUpdate }) => {
           name="title"
           onChange={(e) => setTitle(e.target.value)}
           value={title}
+          className={emptyFields.includes("title") ? "error" : ""}
           placeholder="Add task"
         ></input>
         <button type="submit">Add</button>

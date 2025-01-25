@@ -12,6 +12,12 @@ export const tasksReducer = (state, action) => {
       return {
         tasks: [action.payload, ...state.tasks],
       };
+    case "TOGGLE_TASK":
+      return {
+        tasks: state.tasks.map((task) =>
+          task._id === action.payload._id ? { ...task, done: !task.done } : task
+        ),
+      };
     case "DELETE_TASK":
       return {
         tasks: state.tasks.filter((task) => task._id !== action.payload._id),

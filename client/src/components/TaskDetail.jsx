@@ -8,8 +8,8 @@ const TaskDetail = ({ task }) => {
       method: "PATCH",
     });
 
-    if (!response.ok) {
-      console.error("Error updating task");
+    if (response.ok) {
+      dispatch({ type: "TOGGLE_TASK", payload: task });
     }
   };
 
@@ -27,10 +27,12 @@ const TaskDetail = ({ task }) => {
     <div className="task-detail">
       <input
         type="checkbox"
-        checked={task.complete}
+        checked={task.done}
         onChange={handleCheckboxChange}
       ></input>
-      <h2>{task.title}</h2>
+      <h2 style={{ textDecoration: task.done ? "line-through" : null }}>
+        {task.title}
+      </h2>
       <button>Edit</button>
       <button onClick={handleClick}>Delete</button>
     </div>
