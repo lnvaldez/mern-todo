@@ -24,7 +24,16 @@ const Home = () => {
   return (
     <div className="home">
       <TaskInput />
-      <div className="tasks">
+      <div
+        className="tasks"
+        style={{
+          maxWidth: "600px",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+        }}
+      >
         {tasks &&
           tasks.map((task) => <TaskDetail key={task._id} task={task} />)}
       </div>

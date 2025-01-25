@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useTasksContext } from "../hooks/useTasksContext";
+import { Checkbox, Input, Button } from "antd";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const TaskDetail = ({ task }) => {
   const { dispatch } = useTasksContext();
@@ -60,19 +62,20 @@ const TaskDetail = ({ task }) => {
   };
 
   return (
-    <div className="task-detail">
+    <div
+      className="task-detail"
+      style={{ display: "flex", alignItems: "center", gap: "8px" }}
+    >
       {!isEditing && (
-        <input
-          type="checkbox"
-          checked={task.done}
-          onChange={handleCheckboxChange}
-        />
+        <Checkbox checked={task.done} onChange={handleCheckboxChange} />
       )}
 
       {isEditing ? (
-        <form onSubmit={handleEditSubmit} style={{ display: "inline" }}>
-          <input
-            type="text"
+        <form
+          onSubmit={handleEditSubmit}
+          style={{ display: "inline", flex: 1 }}
+        >
+          <Input
             value={editedTitle}
             onChange={(e) => setEditedTitle(e.target.value)}
             autoFocus
@@ -80,15 +83,26 @@ const TaskDetail = ({ task }) => {
           />
         </form>
       ) : (
-        <h2 style={{ textDecoration: task.done ? "line-through" : null }}>
+        <h2
+          style={{
+            textDecoration: task.done ? "line-through" : null,
+            margin: 0,
+            flex: 1,
+          }}
+        >
           {task.title}
         </h2>
       )}
 
       {!isEditing && (
         <>
-          <button onClick={handleEdit}>Edit</button>
-          <button onClick={handleDelete}>Delete</button>
+          <Button type="text" icon={<EditOutlined />} onClick={handleEdit} />
+          <Button
+            type="text"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={handleDelete}
+          />
         </>
       )}
     </div>
