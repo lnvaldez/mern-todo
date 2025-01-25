@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useTasksContext } from "../hooks/useTasksContext";
 
 const TaskInput = ({ onUpdate }) => {
+  const { dispatch } = useTasksContext();
   const [title, setTitle] = useState("");
   const [error, setError] = useState(null);
 
@@ -28,7 +30,7 @@ const TaskInput = ({ onUpdate }) => {
         setTitle("");
         setError(null);
         console.log("Task added");
-        onUpdate();
+        dispatch({ type: "CREATE_TASK", payload: json.task });
       }
     } catch (error) {
       setError("Failed to add task");

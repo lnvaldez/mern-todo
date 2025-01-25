@@ -25,8 +25,8 @@ const getTaskById = async (req, res) => {
 const addTask = async (req, res) => {
   const { title } = req.body;
   try {
-    await Task.create({ title });
-    res.status(200).json({ message: "Task created" });
+    const task = await Task.create({ title });
+    res.status(200).json({ task });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
