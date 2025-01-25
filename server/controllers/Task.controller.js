@@ -48,8 +48,8 @@ const toggleTaskComplete = async (req, res) => {
 const removeTask = async (req, res) => {
   const id = req.params.id;
   try {
-    await Task.deleteOne({ _id: id });
-    res.status(200).json({ message: "Task removed" });
+    const task = await Task.deleteOne({ _id: id });
+    res.status(200).json({ task });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

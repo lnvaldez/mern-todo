@@ -47,6 +47,7 @@ const TaskInput = ({ onUpdate }) => {
           name="title"
           onChange={(e) => setTitle(e.target.value)}
           value={title}
+          placeholder="Add task"
         ></input>
         <button type="submit">Add</button>
       </form>
