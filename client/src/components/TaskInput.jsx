@@ -6,6 +6,7 @@ import { PlusOutlined } from "@ant-design/icons";
 const TaskInput = () => {
   const { dispatch } = useTasksContext();
   const [error, setError] = useState(null);
+  const [form] = Form.useForm();
 
   const handleSubmit = async (values) => {
     try {
@@ -24,6 +25,7 @@ const TaskInput = () => {
       } else {
         setError(null);
         dispatch({ type: "CREATE_TASK", payload: json.task });
+        form.resetFields();
       }
     } catch (error) {
       setError("Failed to add task");
@@ -33,7 +35,7 @@ const TaskInput = () => {
   return (
     <div style={{ maxWidth: "600px", margin: "20px auto" }}>
       <h1>Add Todo</h1>
-      <Form onFinish={handleSubmit}>
+      <Form form={form} onFinish={handleSubmit}>
         <Form.Item
           name="title"
           rules={[{ required: true, message: "Please enter a task" }]}
