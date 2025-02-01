@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTasksContext } from "../hooks/useTasksContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 import { Input, Button, Form, ConfigProvider } from "antd";
 import { createStyles } from "antd-style";
 import { PlusOutlined } from "@ant-design/icons";
@@ -33,15 +34,22 @@ const useStyle = createStyles(({ prefixCls, css }) => ({
 const TaskInput = () => {
   const { styles } = useStyle();
   const { dispatch } = useTasksContext();
+  const { user } = useAuthContext();
   const [error, setError] = useState(null);
   const [form] = Form.useForm();
 
   const handleSubmit = async (values) => {
+    if (!user) {
+      setError("You must be logged in");
+      return;
+    }
+
     try {
       const response = await fetch("/api/tasks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
         },
         body: JSON.stringify({ title: values.title }),
       });
@@ -62,7 +70,6 @@ const TaskInput = () => {
 
   return (
     <div style={{ maxWidth: "600px", margin: "20px auto" }}>
-      <h1>Add Todo</h1>
       <ConfigProvider
         button={{
           className: styles.linearGradientButton,

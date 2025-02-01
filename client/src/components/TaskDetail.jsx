@@ -1,16 +1,25 @@
 import { useState } from "react";
 import { useTasksContext } from "../hooks/useTasksContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 import { Checkbox, Input, Button } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 const TaskDetail = ({ task }) => {
   const { dispatch } = useTasksContext();
+  const { user } = useAuthContext();
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(task.title);
 
   const handleCheckboxChange = async () => {
+    if (!user) {
+      return;
+    }
+
     const response = await fetch(`/api/tasks/${task._id}`, {
       method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
     });
 
     if (response.ok) {
@@ -23,11 +32,15 @@ const TaskDetail = ({ task }) => {
   };
 
   const saveChanges = async () => {
+    if (!user) {
+      return;
+    }
     const response = await fetch(`/api/tasks/${task._id}`, {
       method: "PUT",
       body: JSON.stringify({ title: editedTitle }),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
 
@@ -52,8 +65,14 @@ const TaskDetail = ({ task }) => {
   };
 
   const handleDelete = async () => {
+    if (!user) {
+      return;
+    }
     const response = await fetch(`/api/tasks/${task._id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
     });
 
     if (response.ok) {

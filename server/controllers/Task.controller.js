@@ -3,7 +3,8 @@ const Task = require("../models/Task.model");
 // Get all tasks
 const getAllTasks = async (req, res) => {
   try {
-    const tasks = await Task.find().sort({ createdAt: -1 });
+    const userId = req.user._id;
+    const tasks = await Task.find({ userId }).sort({ createdAt: -1 });
     res.status(200).json(tasks);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -32,7 +33,8 @@ const addTask = async (req, res) => {
   }
 
   try {
-    const task = await Task.create({ title });
+    const userId = req.user._id;
+    const task = await Task.create({ title, userId });
     res.status(200).json({ task });
   } catch (error) {
     res.status(500).json({ error: "Task title is required.", emptyFields });

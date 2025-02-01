@@ -1,11 +1,20 @@
 import { Link } from "react-router-dom";
 import { HomeOutlined } from "@ant-design/icons";
-import { Layout, Typography } from "antd";
+import { Layout, Typography, Button } from "antd";
+import { useLogout } from "../hooks/useLogout";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const { Header } = Layout;
 const { Title } = Typography;
 
 const Navbar = () => {
+  const { logout } = useLogout();
+  const { user } = useAuthContext();
+
+  const handleClick = () => {
+    logout();
+  };
+
   return (
     <Header
       style={{
@@ -25,7 +34,7 @@ const Navbar = () => {
           margin: "0 auto",
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "space-between",
         }}
       >
         <Link
@@ -43,6 +52,24 @@ const Navbar = () => {
             To Do List
           </Title>
         </Link>
+
+        <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+          {user ? (
+            <>
+              <span>{user.email}</span>
+              <Button onClick={handleClick}>Log out</Button>
+            </>
+          ) : (
+            <>
+              <Link to="/login">
+                <Button type="link">Login</Button>
+              </Link>
+              <Link to="/signup">
+                <Button type="primary">Signup</Button>
+              </Link>
+            </>
+          )}
+        </div>
       </div>
     </Header>
   );
